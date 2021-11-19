@@ -1,0 +1,73 @@
+https://codedrills.io/contests/interview-practice-round-26/problems/coca-cola
+
+You are given N full bottles of Coca-Cola, you can recycle X (X > 1) empty bottles of Coca-Cola for one full bottle of Coca-Cola. After you drink from a bottle of Coca-Cola it becomes empty.
+Find the maximum number of Coca-Cola bottles you can drink from.
+
+Sample 0
+Input
+N: 5
+X: 4
+
+Output
+6
+
+Explanation
+First you can drink all 5 full bottles of Coca-Cola that you have, they all become empty. You can recycle 4 of them to receive another full bottle. So, you drink a total of 6 bottles of Coca-Cola. Note that, you still have two empty bottles left but you can't recycle them for another full bottle.
+
+int totalbottles(int N, int X) {
+
+		
+		/*
+    
+    
+    algo
+    full=n
+    recycle=n
+    
+    count=0;
+    
+    now count main full ko add karo
+    ab
+    jo bhi empty hai jo recycle wale main part lenge
+    unme add kya hoenge/?
+    jo bhi pehle se recycle bin main hai + jo abhi empty hue full main jitne the sb
+    so recycle= reccyle+ full
+    full kitna hoga?
+    full utna hoga ki 19 toys hai and harr bache ko 4 dena hai to kitne bacho ko de paenge?
+    19/4
+    matlab 4 bache ko de paenge and 3 bach jaenge
+    similarlry 
+    yaha pe full ho jaega full=full/X;
+    ab recycle kitna update ho jaega
+    
+    agar 19 toys the and sbko 4 batte to bache kitne...?19%4 = 3
+    matlab ki recycle%x ho jaega recycle
+    
+    loop tb tk chalao jab tk full=0 nahi ho jata
+    
+    */
+	int full=N;
+	int recycle=0;
+	
+	int count=0;
+		while(full!=0)
+		{
+		count+=full;
+		
+	recycle+=full;
+			full=recycle/X;
+			recycle=recycle%X;
+	
+		
+		}
+		
+		return count;
+	}
+};
+
+
+ORRRRR
+
+
+num=n/(x-1)+1;
+return n+num-1;
