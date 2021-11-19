@@ -1,0 +1,60 @@
+https://codedrills.io/contests/interview-practice-round-26/problems/restaurants
+
+N restaurants are arranged along a circular route. Bob can run from one restaurant to the next restaurant i.e. from ith restaurant to (i+1)th restaurant (and from Nth restaurant to the 1st restaurant). Initially he has 0 energy. After eating at the ith restaurant he will receive A[i] energy. It costs him W[i] energy to travel from the ith restaurant to the next restaurant.
+You are given two integer arrays A and W. You have to return the index of the restaurant from which Bob can start and travel around the circle once in the clockwise direction (Bob will visit every restaurant exactly once except the starting restaurant, which he will visit twice), otherwise return -1. If there multiple answers, return the minimum of them.
+
+Sample 0
+Input
+A: [2, 4, 5]
+W: [1, 3, 6]
+
+Output
+1
+
+Explanation
+If Bob starts at the first restaurant, he will get 2 energy. It will cost him 1 energy to run to the next restaurant.
+He will receive 4 energy at the next restaurant. Now his total energy is (2 - 1) + 4 = 5. It will cost 3 to travel to the next restaurant.
+Bob will get 5 energy from the third restaurant. His total energy now is (5 - 3) + 5 = 7. It will cost 6 to complete the cycle and reach the first restaurant.
+Bob can also complete the cycle if he starts from the second restaurant.
+It is impossible to reach the next restaurant if he starts from the third restaurant.
+After eating at the third restaurant his energy is 5, but it takes 6 energy to run to the next restaurant. So, the possible answers are [1, 2]. We return 1, the minimum of them.
+
+class Solution 
+{
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) 
+    {
+        // first of all we need to check whether we've sfficient fuel or not. 
+        int total_cost=0,total_fuel=0,n=cost.size();
+        for(int i=0;i<n;i++)
+        {
+            total_cost+=cost[i];
+            total_fuel+=gas[i];
+        }
+        // If the total fuel is lesser than the cost then definitely we can't cover the whole cicular tour.
+        if(total_fuel<total_cost)
+        {
+            return -1;
+        }
+        
+        
+        // If the total fuel is sufficient enough to cover the circular tour then definitely an answer exists
+        int curr_fuel=0,start=0;  // start with zero fuel.
+        for(int i=0;i<n;i++)
+        {
+            // If at any point our balance/ current fuel is negative that means we can't come to the i'th petrol pump from the previous pump beacuse our fuel won't allow us to cover such distance. 
+            //So we'll make the i'th pump as the start point ans proceed. Simultaneously we'll make the current fuel to be 0 as we're starting freshly.
+            if(curr_fuel<0)
+            {
+                start=i;
+                curr_fuel=0;
+            }
+            // at any station we'll fill petrol and pay the cost to go to the next station . so current fuel would be the following.
+            curr_fuel+=(gas[i]-cost[i]);
+        }
+        return start;
+    }
+};
+
+Now you might be wondering even after reaching the end of the array why we are not making any circular tour and after reaching the end we're concluding the result. The main concept is that :-
+Let's suppose we start at the 0'th pump moving on and at the middle we've negative fuel so we'll restart our journey from the middle position. Now let's suppose after reaching the end we've some fuel in our tank. We're saying that the middle position will be the starting position. But why we're not going back to the middle element ( from where we've started our journey) from the end to just check whether it's possible to make circular tour or not? It's because we've already checked previously that it's possible to come from the 0'th index to the middle. So no need to check for the remainig part of the circular tour since it will always be a valid tour.
