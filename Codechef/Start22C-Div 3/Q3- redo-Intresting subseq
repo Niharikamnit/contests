@@ -1,0 +1,22 @@
+https://www.codechef.com/START22C/problems/INTSEQ
+
+Need to find pattern
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int t;
+    cin >> t;
+    while(t--) {
+        long long int k;
+        cin >> k;
+        long long int ans=0;
+            while(k%2==0) {
+                ans++;
+                k=k/2;
+            }
+        cout << ans << endl;
+    }
+	return 0;
+}
